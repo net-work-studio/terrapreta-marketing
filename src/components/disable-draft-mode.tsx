@@ -12,7 +12,7 @@ export function DisableDraftMode() {
 
   return (
     <a
-      className="fixed right-4 bottom-4 bg-gray-50 px-4 py-2"
+      className="fixed right-4 bottom-4 bg-gray-100 px-4 py-2 text-black hover:bg-gray-200"
       href="/api/draft-mode/disable"
     >
       Disable Draft Mode
