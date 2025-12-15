@@ -381,7 +381,7 @@ export type Project = {
   name: string;
   slug: Slug;
   mainImage: ImageObject;
-  status: "on-hold" | "in-progress" | "in-costruction" | "completed" | "cancelled";
+  status: "on-hold" | "in-progress" | "in-construction" | "completed" | "cancelled";
   location?: string;
   areaRestored?: string;
   interventionType?: string;
@@ -858,7 +858,7 @@ export type PROJECT_ITEM_QUERYResult = {
       } | null;
     };
   };
-  status: "cancelled" | "completed" | "in-costruction" | "in-progress" | "on-hold";
+  status: "cancelled" | "completed" | "in-construction" | "in-progress" | "on-hold";
   location: string | null;
   areaRestored: string | null;
   interventionType: string | null;

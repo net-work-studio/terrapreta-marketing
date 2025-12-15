@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import { MoreHorizontal } from "lucide-react";
-import type * as React from "react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -12,7 +12,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
   return (
     <ol
       className={cn(
-        "flex flex-wrap items-center gap-1.5 break-words text-muted-foreground text-sm sm:gap-2.5",
+        "flex flex-wrap items-center gap-1.5 wrap-break-word text-muted-foreground text-sm sm:gap-2.5",
         className
       )}
       data-slot="breadcrumb-list"
@@ -31,23 +31,27 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
   );
 }
 
-function BreadcrumbLink({
-  asChild,
-  className,
-  ...props
-}: React.ComponentProps<"a"> & {
+type BreadcrumbLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   asChild?: boolean;
-}) {
-  const Comp = asChild ? Slot : "a";
+};
 
-  return (
-    <Comp
-      className={cn("transition-colors hover:text-foreground", className)}
-      data-slot="breadcrumb-link"
-      {...props}
-    />
-  );
-}
+const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
+  ({ asChild = false, className, ...props }, ref) => {
+    // Broaden the component type to avoid style prop incompatibilities with Slot.
+    const Comp: React.ElementType = asChild ? Slot : "a";
+
+    return (
+      <Comp
+        ref={ref}
+        className={cn("transition-colors hover:text-foreground", className)}
+        data-slot="breadcrumb-link"
+        {...props}
+      />
+    );
+  }
+);
+
+BreadcrumbLink.displayName = "BreadcrumbLink";
 
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
   return (
