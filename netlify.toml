@@ -1,11 +1,11 @@
 [[redirects]]
-from = "terrapreta.xyz/*"
+from = "https://terrapreta.xyz/*"
 to = "https://terrapreta.it/:splat"
 status = 308
 force = true
 
 [[redirects]]
-from = "www.terrapreta.xyz/*"
+from = "https://www.terrapreta.xyz/*"
 to = "https://terrapreta.it/:splat"
 status = 308
 force = true
