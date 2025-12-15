@@ -15,7 +15,7 @@
 // Source: schema.json
 export type HeroSplitModule = {
   _type: "heroSplitModule";
-  name?: string;
+  name: string;
 };
 
 export type Modules = Array<{
@@ -24,8 +24,8 @@ export type Modules = Array<{
 
 export type LinkObject = {
   _type: "linkObject";
-  name?: string;
-  type?: "internal" | "external";
+  name: string;
+  type: "internal" | "external";
   page?: {
     _ref: string;
     _type: "reference";
@@ -63,7 +63,7 @@ export type LinkObject = {
     [internalGroqTypeReferenceTo]?: "press";
   };
   href?: string;
-  target?: "_self" | "_blank";
+  target: "_self" | "_blank";
 };
 
 export type GridDimensionObject = {
@@ -73,7 +73,7 @@ export type GridDimensionObject = {
 
 export type ContentObject = {
   _type: "contentObject";
-  content?: Array<{
+  content: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -97,7 +97,7 @@ export type ContentObject = {
 
 export type ImageObject = {
   _type: "imageObject";
-  image?: {
+  image: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -115,8 +115,8 @@ export type ImageObject = {
 
 export type TitleSlugObject = {
   _type: "titleSlugObject";
-  name?: string;
-  slug?: Slug;
+  name: string;
+  slug: Slug;
 };
 
 export type Customer = {
@@ -125,7 +125,7 @@ export type Customer = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
   mainImage?: {
     asset?: {
       _ref: string;
@@ -143,18 +143,18 @@ export type Customer = {
 
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
 };
 
 export type SanityImageHotspot = {
   _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type UnGoal = {
@@ -163,8 +163,8 @@ export type UnGoal = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  logoPositive?: {
+  name: string;
+  logoPositive: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -176,7 +176,7 @@ export type UnGoal = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  logoNegative?: {
+  logoNegative: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -196,9 +196,9 @@ export type Organization = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  type?: "client" | "partner" | "sponsor";
-  logoDark?: {
+  name: string;
+  type: "client" | "partner" | "sponsor";
+  logoDark: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -230,7 +230,7 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
   links?: Array<{
     _key: string;
   } & LinkObject>;
@@ -242,7 +242,7 @@ export type Process = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
 };
 
 export type Capability = {
@@ -251,7 +251,7 @@ export type Capability = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
 };
 
 export type About = {
@@ -260,7 +260,7 @@ export type About = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
 };
 
 export type Press = {
@@ -269,7 +269,7 @@ export type Press = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
 };
 
 export type Site = {
@@ -278,7 +278,7 @@ export type Site = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  name: string;
 };
 
 export type Page = {
@@ -287,9 +287,9 @@ export type Page = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  mainImage?: ImageObject;
+  name: string;
+  slug: Slug;
+  mainImage: ImageObject;
   modules?: Array<{
     _key: string;
   } & HeroSplitModule>;
@@ -297,7 +297,7 @@ export type Page = {
 
 export type Slug = {
   _type: "slug";
-  current?: string;
+  current: string;
   source?: string;
 };
 
@@ -307,8 +307,8 @@ export type Glossary = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
+  name: string;
+  slug: Slug;
   image?: ImageObject;
   definition?: string;
 };
@@ -319,20 +319,20 @@ export type Journal = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
+  name: string;
+  slug: Slug;
   gridDimension?: GridDimensionObject;
-  tag?: {
+  tag: {
     _ref: string;
     _type: "reference";
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "tag";
   };
-  location?: string;
-  publishingDate?: string;
-  mainImage?: ImageObject;
-  shortDescription?: string;
-  contentObject?: Array<{
+  location: string;
+  publishingDate: string;
+  mainImage: ImageObject;
+  shortDescription: string;
+  contentObject: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -378,10 +378,10 @@ export type Project = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  mainImage?: ImageObject;
-  status?: "on-hold" | "in-progress" | "in-costruction" | "completed" | "cancelled";
+  name: string;
+  slug: Slug;
+  mainImage: ImageObject;
+  status: "on-hold" | "in-progress" | "in-construction" | "completed" | "cancelled";
   location?: string;
   areaRestored?: string;
   interventionType?: string;
@@ -407,8 +407,8 @@ export type Research = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  titleSlug?: TitleSlugObject;
-  mainImage?: ImageObject;
+  titleSlug: TitleSlugObject;
+  mainImage: ImageObject;
   relatedService?: {
     _ref: string;
     _type: "reference";
@@ -429,10 +429,10 @@ export type Service = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
+  name: string;
+  slug: Slug;
   shortDescription?: string;
-  mainImage?: ImageObject;
+  mainImage: ImageObject;
   clients?: Array<{
     _ref: string;
     _type: "reference";
@@ -489,8 +489,8 @@ export type Tag = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
+  name: string;
+  slug: Slug;
 };
 
 export type MediaTag = {
@@ -523,9 +523,9 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
+  height: number;
+  width: number;
+  aspectRatio: number;
 };
 
 export type SanityImageMetadata = {
@@ -605,34 +605,34 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 // Query: *[_type == "organization"]{  _id,  name,  type,  logoDark{    _type,    asset->{      _id,      url,    }  },}
 export type ORGANIZATIONS_QUERYResult = Array<{
   _id: string;
-  name: string | null;
-  type: "client" | "partner" | "sponsor" | null;
+  name: string;
+  type: "client" | "partner" | "sponsor";
   logoDark: {
     _type: "image";
     asset: {
       _id: string;
       url: string | null;
     } | null;
-  } | null;
+  };
 }>;
 
 // Source: ./src/app/sitemap.ts
 // Variable: PROJECTS_SITEMAP_QUERY
 // Query: *[_type == "project" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
 export type PROJECTS_SITEMAP_QUERYResult = Array<{
-  slug: string | null;
+  slug: string;
   _updatedAt: string;
 }>;
 // Variable: JOURNAL_SITEMAP_QUERY
 // Query: *[_type == "journal" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
 export type JOURNAL_SITEMAP_QUERYResult = Array<{
-  slug: string | null;
+  slug: string;
   _updatedAt: string;
 }>;
 // Variable: SERVICES_SITEMAP_QUERY
 // Query: *[_type == "service" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
 export type SERVICES_SITEMAP_QUERYResult = Array<{
-  slug: string | null;
+  slug: string;
   _updatedAt: string;
 }>;
 
@@ -641,8 +641,8 @@ export type SERVICES_SITEMAP_QUERYResult = Array<{
 // Query: *[_type == "project" && defined(slug.current)] {  _id,  name,  slug,  shortDescription,  gridDimension{    isBig  },  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  tag->{    _id,    name  }}
 export type PROJECTS_QUERYResult = Array<{
   _id: string;
-  name: string | null;
-  slug: Slug | null;
+  name: string;
+  slug: Slug;
   shortDescription: string | null;
   gridDimension: null;
   mainImage: {
@@ -653,17 +653,17 @@ export type PROJECTS_QUERYResult = Array<{
         _id: string;
         url: string | null;
       } | null;
-    } | null;
-  } | null;
+    };
+  };
   tag: null;
 }>;
 // Variable: JOURNAL_QUERY
 // Query: *[_type == "journal" && defined(slug.current)] | order(publishingDate desc){  _id,  name,  slug,  shortDescription,  gridDimension{    isBig  },  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  publishingDate,  tag->{    _id,    name  }}
 export type JOURNAL_QUERYResult = Array<{
   _id: string;
-  name: string | null;
-  slug: Slug | null;
-  shortDescription: string | null;
+  name: string;
+  slug: Slug;
+  shortDescription: string;
   gridDimension: {
     isBig: boolean | null;
   } | null;
@@ -675,20 +675,20 @@ export type JOURNAL_QUERYResult = Array<{
         _id: string;
         url: string | null;
       } | null;
-    } | null;
-  } | null;
-  publishingDate: string | null;
+    };
+  };
+  publishingDate: string;
   tag: {
     _id: string;
-    name: string | null;
-  } | null;
+    name: string;
+  };
 }>;
 // Variable: JOURNAL_ITEM_QUERY
 // Query: *[_type == "journal" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  location,  publishingDate,  shortDescription,  contentObject[]{    ...,    _type == "imageObject" => {      ...,      image{        ...,        hotspot,        crop,        asset->{          _id,          url,          metadata{            dimensions{              width,              height,              aspectRatio            }          }        }      }    }  },  tag->{    _id,    name  }}
 export type JOURNAL_ITEM_QUERYResult = {
   _id: string;
-  name: string | null;
-  slug: Slug | null;
+  name: string;
+  slug: Slug;
   mainImage: {
     _type: "imageObject";
     image: {
@@ -697,11 +697,11 @@ export type JOURNAL_ITEM_QUERYResult = {
         _id: string;
         url: string | null;
       } | null;
-    } | null;
-  } | null;
-  location: string | null;
-  publishingDate: string | null;
-  shortDescription: string | null;
+    };
+  };
+  location: string;
+  publishingDate: string;
+  shortDescription: string;
   contentObject: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -728,9 +728,9 @@ export type JOURNAL_ITEM_QUERYResult = {
         url: string | null;
         metadata: {
           dimensions: {
-            width: number | null;
-            height: number | null;
-            aspectRatio: number | null;
+            width: number;
+            height: number;
+            aspectRatio: number;
           } | null;
         } | null;
       } | null;
@@ -738,28 +738,28 @@ export type JOURNAL_ITEM_QUERYResult = {
       hotspot: SanityImageHotspot | null;
       crop: SanityImageCrop | null;
       _type: "image";
-    } | null;
+    };
     altContent?: string;
     caption?: string;
-  }> | null;
+  }>;
   tag: {
     _id: string;
-    name: string | null;
-  } | null;
+    name: string;
+  };
 } | null;
 // Variable: TAGS_QUERY
 // Query: *[_type == "tag"] | order(name asc){  _id,  name,  slug}
 export type TAGS_QUERYResult = Array<{
   _id: string;
-  name: string | null;
-  slug: Slug | null;
+  name: string;
+  slug: Slug;
 }>;
 // Variable: SERVICES_QUERY
 // Query: *[_type == "service" && defined(slug.current)] | order(name asc){  _id,  name,  slug,  shortDescription,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  }}
 export type SERVICES_QUERYResult = Array<{
   _id: string;
-  name: string | null;
-  slug: Slug | null;
+  name: string;
+  slug: Slug;
   shortDescription: string | null;
   mainImage: {
     _type: "imageObject";
@@ -769,15 +769,15 @@ export type SERVICES_QUERYResult = Array<{
         _id: string;
         url: string | null;
       } | null;
-    } | null;
-  } | null;
+    };
+  };
 }>;
 // Variable: SERVICE_QUERY
 // Query: *[_type == "service" && slug.current == $slug][0]{  _id,  name,  slug,  shortDescription,  content[]{    ...,    _type == "imageObject" => {      ...,      image{        ...,        hotspot,        crop,        asset->{          _id,          url,          metadata{            dimensions{              width,              height,              aspectRatio            }          }        }      }    }  },  capabilities[]->{    _id,    name  },  clients[]->{    _id,    name,    logoDark{      asset->{        _id,        _type,        url      }    }  },  mainImage{    image{      asset->{        url      }    }  }}
 export type SERVICE_QUERYResult = {
   _id: string;
-  name: string | null;
-  slug: Slug | null;
+  name: string;
+  slug: Slug;
   shortDescription: string | null;
   content: Array<{
     children?: Array<{
@@ -805,9 +805,9 @@ export type SERVICE_QUERYResult = {
         url: string | null;
         metadata: {
           dimensions: {
-            width: number | null;
-            height: number | null;
-            aspectRatio: number | null;
+            width: number;
+            height: number;
+            aspectRatio: number;
           } | null;
         } | null;
       } | null;
@@ -815,39 +815,39 @@ export type SERVICE_QUERYResult = {
       hotspot: SanityImageHotspot | null;
       crop: SanityImageCrop | null;
       _type: "image";
-    } | null;
+    };
     altContent?: string;
     caption?: string;
   }> | null;
   capabilities: Array<{
     _id: string;
-    name: string | null;
+    name: string;
   }> | null;
   clients: Array<{
     _id: string;
-    name: string | null;
+    name: string;
     logoDark: {
       asset: {
         _id: string;
         _type: "sanity.imageAsset";
         url: string | null;
       } | null;
-    } | null;
+    };
   }> | null;
   mainImage: {
     image: {
       asset: {
         url: string | null;
       } | null;
-    } | null;
-  } | null;
+    };
+  };
 } | null;
 // Variable: PROJECT_ITEM_QUERY
 // Query: *[_type == "project" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  status,  location,  areaRestored,  interventionType,  shortDescription,  pageContent{    content[]{      ...,      _type == "imageObject" => {        ...,        image{          ...,          hotspot,          crop,          asset->{            _id,            url,            metadata{              dimensions{                width,                height,                aspectRatio              }            }          }        }      }    }  },  relatedService->{    _id,    name,    slug  },  relatedResearch->{    _id,    name  }}
 export type PROJECT_ITEM_QUERYResult = {
   _id: string;
-  name: string | null;
-  slug: Slug | null;
+  name: string;
+  slug: Slug;
   mainImage: {
     _type: "imageObject";
     image: {
@@ -856,9 +856,9 @@ export type PROJECT_ITEM_QUERYResult = {
         _id: string;
         url: string | null;
       } | null;
-    } | null;
-  } | null;
-  status: "cancelled" | "completed" | "in-costruction" | "in-progress" | "on-hold" | null;
+    };
+  };
+  status: "cancelled" | "completed" | "in-construction" | "in-progress" | "on-hold";
   location: string | null;
   areaRestored: string | null;
   interventionType: string | null;
@@ -890,9 +890,9 @@ export type PROJECT_ITEM_QUERYResult = {
           url: string | null;
           metadata: {
             dimensions: {
-              width: number | null;
-              height: number | null;
-              aspectRatio: number | null;
+              width: number;
+              height: number;
+              aspectRatio: number;
             } | null;
           } | null;
         } | null;
@@ -900,15 +900,15 @@ export type PROJECT_ITEM_QUERYResult = {
         hotspot: SanityImageHotspot | null;
         crop: SanityImageCrop | null;
         _type: "image";
-      } | null;
+      };
       altContent?: string;
       caption?: string;
-    }> | null;
+    }>;
   } | null;
   relatedService: {
     _id: string;
-    name: string | null;
-    slug: Slug | null;
+    name: string;
+    slug: Slug;
   } | null;
   relatedResearch: {
     _id: string;
@@ -919,27 +919,27 @@ export type PROJECT_ITEM_QUERYResult = {
 // Query: *[_type == "unGoal"] | order(name asc){  _id,  name,  logoNegative{    _type,    asset->{      _id,      url    }  },  logoPositive{    _type,    asset->{      _id,      url    }  }}
 export type UN_GOALS_QUERYResult = Array<{
   _id: string;
-  name: string | null;
+  name: string;
   logoNegative: {
     _type: "image";
     asset: {
       _id: string;
       url: string | null;
     } | null;
-  } | null;
+  };
   logoPositive: {
     _type: "image";
     asset: {
       _id: string;
       url: string | null;
     } | null;
-  } | null;
+  };
 }>;
 // Variable: CUSTOMERS_QUERY
 // Query: *[_type == "customer"] | order(name asc){  _id,  name,  shortDescription,  mainImage{    hotspot,    crop,    asset->{      _id,      url    }  }}
 export type CUSTOMERS_QUERYResult = Array<{
   _id: string;
-  name: string | null;
+  name: string;
   shortDescription: string | null;
   mainImage: {
     hotspot: SanityImageHotspot | null;

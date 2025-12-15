@@ -34,7 +34,7 @@ export const projectDoc = defineType({
         list: [
           { title: "On Hold", value: "on-hold" },
           { title: "In Progress", value: "in-progress" },
-          { title: "In Costruction", value: "in-costruction" },
+          { title: "In Construction", value: "in-construction" },
           { title: "Completed", value: "completed" },
           { title: "Cancelled", value: "cancelled" },
         ],

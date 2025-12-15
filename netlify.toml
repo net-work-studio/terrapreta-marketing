@@ -1,0 +1,18 @@
+[[redirects]]
+from = "terrapreta.xyz/*"
+to = "https://terrapreta.it/:splat"
+status = 308
+force = true
+
+[[redirects]]
+from = "www.terrapreta.xyz/*"
+to = "https://terrapreta.it/:splat"
+status = 308
+force = true
+
+[build]
+command = "bun install --frozen-lockfile && bun run build"
+publish = ".next"
+
+  [build.environment]
+  BUN_VERSION = "1.1.26"
