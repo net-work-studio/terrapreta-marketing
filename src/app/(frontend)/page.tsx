@@ -18,10 +18,10 @@ export const metadata: Metadata = generateMetadataHelper({
   url: "/",
 });
 
-type SectionWrapperProps = {
+interface SectionWrapperProps {
   children: React.ReactNode;
   isFirstItem?: boolean;
-};
+}
 
 function SectionWrapper({
   children,

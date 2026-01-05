@@ -3,11 +3,11 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
 
-type NumberCardProps = {
+interface NumberCardProps {
   title: string;
   description: string;
   image: string;
-};
+}
 
 function NumberCard({ title, description, image }: NumberCardProps) {
   return (

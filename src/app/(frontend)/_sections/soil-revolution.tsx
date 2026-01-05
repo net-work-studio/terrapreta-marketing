@@ -11,11 +11,11 @@ const analyzeCover =
 const engageCover =
   "https://cdn.sanity.io/images/wj2okvbq/production/fa9d22362317a91c3a70093473611429702c875a-2000x3000.webp";
 
-type SoilCardProps = {
+interface SoilCardProps {
   title: string;
   image: StaticImageData | string;
   description: string;
-};
+}
 
 function SoilCard({ title, image, description }: SoilCardProps) {
   return (
@@ -45,7 +45,7 @@ export default function SoilRevolution() {
         <p className="text-pretty text-stone-400 text-xl md:w-2/3">
           We are architects and innovators, working with a wide team of
           scientists to address the complexity of nature interactions for
-          leading the Soil Reveloution.
+          leading the Soil Revolution.
         </p>
       </hgroup>
       <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
