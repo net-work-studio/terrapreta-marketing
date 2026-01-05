@@ -87,4 +87,11 @@ export const journalDoc = defineType({
       to: [{ type: "research" }],
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "publishingDate",
+      media: "mainImage.image",
+    },
+  },
 });
