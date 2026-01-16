@@ -210,7 +210,7 @@ export type Redirect = {
   source: string;
   destination: string;
   permanent?: boolean;
-  isActive?: boolean;
+  isActive?: string;
   notes?: string;
 };
 

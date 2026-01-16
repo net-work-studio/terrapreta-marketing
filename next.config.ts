@@ -17,15 +17,14 @@ async function getSanityRedirects() {
     const redirects = await sanityClient.fetch<
       Array<{ source: string; destination: string; permanent: boolean }>
     >(
-      `*[_type == "redirect" && isActive == true] {
+      `*[_type == "redirect" && isActive == "active"] {
         source,
         destination,
         permanent
       }`
     );
     return redirects || [];
-  } catch (error) {
-    console.warn("Failed to fetch redirects from Sanity:", error);
+  } catch {
     return [];
   }
 }

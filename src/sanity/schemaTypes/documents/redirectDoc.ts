@@ -42,11 +42,18 @@ export const redirectDoc = defineType({
       initialValue: true,
     }),
     defineField({
-      type: "boolean",
+      type: "string",
       name: "isActive",
-      title: "Active",
+      title: "Status",
       description: "Enable or disable this redirect",
-      initialValue: true,
+      options: {
+        list: [
+          { title: "Active", value: "active" },
+          { title: "Inactive", value: "inactive" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "active",
     }),
     defineField({
       type: "text",
@@ -67,7 +74,7 @@ export const redirectDoc = defineType({
     prepare({ source, destination, permanent, isActive }) {
       return {
         title: `${source} → ${destination}`,
-        subtitle: `${permanent ? "308" : "307"} ${isActive ? "" : "(inactive)"}`,
+        subtitle: `${permanent ? "308" : "307"} ${isActive === "inactive" ? "(inactive)" : ""}`,
       };
     },
   },
