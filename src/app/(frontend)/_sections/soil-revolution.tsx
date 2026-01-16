@@ -52,7 +52,7 @@ export default function SoilRevolution() {
         <SoilCard
           description="Scientific research and field studies allow us to collect data for evidence-based design and planning."
           image={analyzeCover}
-          title="Analize"
+          title="Analyze"
         />
         <SoilCard
           description="Through our landscape design process, we develop solutions for restoring degraded land."
@@ -62,7 +62,7 @@ export default function SoilRevolution() {
         <SoilCard
           description="To create real change, we engage stakeholders throughout the process and promote soil knowledge through educational activities."
           image={engageCover}
-          title="Enagage"
+          title="Engage"
         />
       </div>
     </div>

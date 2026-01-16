@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 
-type TagTitleProps = {
+interface TagTitleProps {
   title: string;
   tag: string;
   theme?: "light" | "dark";
-};
+}
 
 export default function TagTitle({
   tag,
@@ -15,7 +15,7 @@ export default function TagTitle({
   const themeClass =
     theme === "light"
       ? "from-stone-200 to-stone-300 border-stone-300"
-      : "from-stone-600 to-stone-700 boreder-stone-700";
+      : "from-stone-600 to-stone-700 border-stone-700";
   return (
     <span className="flex flex-col items-start gap-5">
       <span

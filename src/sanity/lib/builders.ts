@@ -5,6 +5,8 @@ import type {
   StructureBuilder,
 } from "sanity/structure";
 
+const CAMEL_CASE_SPLIT_REGEX = /(?=[A-Z])/;
+
 export const singleton = (
   S: StructureBuilder,
   id: string,
@@ -15,7 +17,7 @@ export const singleton = (
     .title(
       title ||
         id
-          .split(/(?=[A-Z])/)
+          .split(CAMEL_CASE_SPLIT_REGEX)
           .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
           .join(" ")
     )
@@ -45,5 +47,5 @@ export const directory = (
 						${maxLevel !== undefined ? `&& count(string::split(metadata.slug.current, '/')) <= ${maxLevel + 1}` : ""}
 					`
         )
-        .params({ path: path + "/" })
+        .params({ path: `${path}/` })
     );

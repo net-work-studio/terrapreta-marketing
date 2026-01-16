@@ -1,8 +1,10 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
@@ -12,9 +14,10 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { PortableImage } from "@/components/ui/portable-image";
+import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { JOURNAL_ITEM_QUERY } from "@/sanity/lib/queries";
@@ -30,27 +33,44 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const { data: journalItem } = await sanityFetch({
-    query: JOURNAL_ITEM_QUERY,
-    params: { slug },
-  });
+  const { isEnabled: isDraftMode } = await draftMode();
+  const [{ data: journalItem }, siteSettings] = await Promise.all([
+    sanityFetch({
+      query: JOURNAL_ITEM_QUERY,
+      params: { slug },
+    }),
+    getSiteSettings(),
+  ]);
 
   if (!journalItem?.name) {
     return generateMetadataHelper({
       title: "Journal",
       description: "Read our latest journal entries.",
       url: "/journal",
+      siteSettings,
+      isDraftMode,
     });
   }
 
   return generateMetadataHelper({
-    title: journalItem.name,
+    title: journalItem.seo?.metaTitle || journalItem.name,
     description:
-      journalItem.shortDescription || "Read our latest journal entries.",
-    image: journalItem.mainImage?.image ?? undefined,
+      journalItem.seo?.metaDescription ||
+      journalItem.shortDescription ||
+      undefined,
+    image:
+      journalItem.seo?.ogImage ?? journalItem.mainImage?.image ?? undefined,
     url: `/journal/${slug}`,
     type: "article",
     publishedTime: journalItem.publishingDate ?? undefined,
+    canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
+    robotsIndex: journalItem.seo?.robotsIndex ?? undefined,
+    robotsFollow: journalItem.seo?.robotsFollow ?? undefined,
+    ogTitle: journalItem.seo?.ogTitle ?? undefined,
+    ogDescription: journalItem.seo?.ogDescription ?? undefined,
+    twitterCard: journalItem.seo?.twitterCard ?? undefined,
+    siteSettings,
+    isDraftMode,
   });
 }
 
@@ -59,9 +79,10 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const { data: journalItem } = await sanityFetch({
     query: JOURNAL_ITEM_QUERY,
-    params: await params,
+    params: { slug },
   });
 
   if (!journalItem?.mainImage?.image) {
@@ -137,11 +158,7 @@ export default async function Page({
         {journalItem?.contentObject && (
           <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
             <PortableText
-              components={{
-                types: {
-                  imageObject: PortableImage,
-                },
-              }}
+              components={portableTextComponents}
               value={journalItem.contentObject}
             />
           </section>
@@ -152,7 +169,7 @@ export default async function Page({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "BlogPosting",
+          "@type": journalItem?.seo?.schemaType || "BlogPosting",
           headline: journalItem?.name,
           description: journalItem?.shortDescription,
           ...(journalItem?.publishingDate && {
@@ -167,6 +184,11 @@ export default async function Page({
           ...(journalItem?.location && {
             locationCreated: journalItem.location,
           }),
+          ...(journalItem?.seo?.customSchema?.knowsAbout && {
+            knowsAbout: journalItem.seo.customSchema.knowsAbout
+              .split(",")
+              .map((s: string) => s.trim()),
+          }),
           author: {
             "@type": "Organization",
             name: "Terrapreta",
@@ -176,6 +198,13 @@ export default async function Page({
             name: "Terrapreta",
           },
         }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Journal", url: "/journal" },
+          { name: journalItem?.name || "Article", url: `/journal/${slug}` },
+        ]}
       />
     </article>
   );

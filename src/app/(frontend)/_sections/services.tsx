@@ -14,9 +14,9 @@ import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { SERVICES_QUERY } from "@/sanity/lib/queries";
-import type { SERVICES_QUERYResult } from "@/sanity/types";
+import type { SERVICES_QUERY_RESULT } from "@/sanity/types";
 
-type ServiceCardProps = {
+interface ServiceCardProps {
   name: string;
   mainImage: {
     image: {
@@ -27,7 +27,7 @@ type ServiceCardProps = {
   };
   shortDescription: string;
   slug: string;
-};
+}
 
 function ServiceCard({
   name,
@@ -140,7 +140,7 @@ export default async function Services() {
           ?.filter(
             (
               service
-            ): service is SERVICES_QUERYResult[number] & {
+            ): service is SERVICES_QUERY_RESULT[number] & {
               name: string;
               slug: { current: string };
               mainImage: { image: { asset: { url: string } } };

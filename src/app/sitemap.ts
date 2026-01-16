@@ -3,21 +3,21 @@ import { defineQuery } from "next-sanity";
 import { client } from "@/sanity/lib/client";
 
 const PROJECTS_SITEMAP_QUERY = defineQuery(
-  `*[_type == "project" && defined(slug.current)] {
+  `*[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {
     "slug": slug.current,
     _updatedAt
   }`
 );
 
 const JOURNAL_SITEMAP_QUERY = defineQuery(
-  `*[_type == "journal" && defined(slug.current)] {
+  `*[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {
     "slug": slug.current,
     _updatedAt
   }`
 );
 
 const SERVICES_SITEMAP_QUERY = defineQuery(
-  `*[_type == "service" && defined(slug.current)] {
+  `*[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {
     "slug": slug.current,
     _updatedAt
   }`

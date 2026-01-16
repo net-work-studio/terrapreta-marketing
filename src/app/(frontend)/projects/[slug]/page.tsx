@@ -1,8 +1,10 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
@@ -11,9 +13,10 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
-import { PortableImage } from "@/components/ui/portable-image";
+import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECT_ITEM_QUERY } from "@/sanity/lib/queries";
@@ -29,25 +32,43 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const { data: projectItem } = await sanityFetch({
-    query: PROJECT_ITEM_QUERY,
-    params: { slug },
-  });
+  const { isEnabled: isDraftMode } = await draftMode();
+  const [{ data: projectItem }, siteSettings] = await Promise.all([
+    sanityFetch({
+      query: PROJECT_ITEM_QUERY,
+      params: { slug },
+    }),
+    getSiteSettings(),
+  ]);
 
   if (!projectItem?.name) {
     return generateMetadataHelper({
       title: "Projects",
       description: "Explore our latest projects.",
       url: "/projects",
+      siteSettings,
+      isDraftMode,
     });
   }
 
   return generateMetadataHelper({
-    title: projectItem.name,
-    description: projectItem.shortDescription || "Explore our latest projects.",
-    image: projectItem.mainImage?.image ?? undefined,
+    title: projectItem.seo?.metaTitle || projectItem.name,
+    description:
+      projectItem.seo?.metaDescription ||
+      projectItem.shortDescription ||
+      undefined,
+    image:
+      projectItem.seo?.ogImage ?? projectItem.mainImage?.image ?? undefined,
     url: `/projects/${slug}`,
     type: "article",
+    canonicalUrl: projectItem.seo?.canonicalUrl ?? undefined,
+    robotsIndex: projectItem.seo?.robotsIndex ?? undefined,
+    robotsFollow: projectItem.seo?.robotsFollow ?? undefined,
+    ogTitle: projectItem.seo?.ogTitle ?? undefined,
+    ogDescription: projectItem.seo?.ogDescription ?? undefined,
+    twitterCard: projectItem.seo?.twitterCard ?? undefined,
+    siteSettings,
+    isDraftMode,
   });
 }
 
@@ -56,9 +77,10 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const { data: projectItem } = await sanityFetch({
     query: PROJECT_ITEM_QUERY,
-    params: await params,
+    params: { slug },
   });
 
   if (!projectItem?.mainImage?.image) {
@@ -125,11 +147,7 @@ export default async function Page({
         {projectItem?.pageContent?.content && (
           <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
             <PortableText
-              components={{
-                types: {
-                  imageObject: PortableImage,
-                },
-              }}
+              components={portableTextComponents}
               value={projectItem.pageContent.content}
             />
           </section>
@@ -140,7 +158,7 @@ export default async function Page({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "Project",
+          "@type": projectItem?.seo?.schemaType || "Project",
           name: projectItem?.name,
           description: projectItem?.shortDescription,
           ...(projectItem?.location && { location: projectItem.location }),
@@ -151,7 +169,19 @@ export default async function Page({
               .auto("format")
               .url(),
           }),
+          ...(projectItem?.seo?.customSchema?.knowsAbout && {
+            knowsAbout: projectItem.seo.customSchema.knowsAbout
+              .split(",")
+              .map((s: string) => s.trim()),
+          }),
         }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Projects", url: "/projects" },
+          { name: projectItem?.name || "Project", url: `/projects/${slug}` },
+        ]}
       />
     </article>
   );

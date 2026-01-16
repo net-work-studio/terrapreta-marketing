@@ -23,7 +23,7 @@ export default function ContactsPage() {
           <Button asChild size="lg" variant="outline">
             <ObfuscatedEmail
               display="mail@terrapreta.it"
-              domain="terrapreta.com"
+              domain="terrapreta.it"
               local="mail"
             />
           </Button>

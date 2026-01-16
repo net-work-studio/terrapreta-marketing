@@ -8,6 +8,7 @@ import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { presentationTool } from "sanity/presentation";
 import { media } from "sanity-plugin-media";
+import Mark from "@/components/brand/mark";
 import { resolve } from "@/sanity/presentation/resolve";
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from "./src/sanity/env";
@@ -18,6 +19,7 @@ export default defineConfig({
   basePath: "/admin",
   projectId,
   dataset,
+  logo: Mark,
   name: "Terrapreta",
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,

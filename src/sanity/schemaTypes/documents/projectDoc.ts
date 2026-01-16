@@ -75,5 +75,16 @@ export const projectDoc = defineType({
       title: "Related Research",
       to: [{ type: "research" }],
     }),
+    defineField({
+      type: "seoObject",
+      name: "seo",
+      title: "SEO",
+      description: "Search engine optimization settings",
+      initialValue: {
+        robotsIndex: "index",
+        robotsFollow: "follow",
+        twitterCard: "summary_large_image",
+      },
+    }),
   ],
 });

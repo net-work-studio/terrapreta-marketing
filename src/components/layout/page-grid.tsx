@@ -5,13 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
 import type {
-  JOURNAL_QUERYResult,
-  PROJECTS_QUERYResult,
+  JOURNAL_QUERY_RESULT,
+  PROJECTS_QUERY_RESULT,
   Slug,
 } from "@/sanity/types";
 
 type GridItemProps = Partial<
-  Omit<JOURNAL_QUERYResult[0] | PROJECTS_QUERYResult[0], "slug">
+  Omit<JOURNAL_QUERY_RESULT[0] | PROJECTS_QUERY_RESULT[0], "slug">
 > & {
   _id: string;
   name: string | null;

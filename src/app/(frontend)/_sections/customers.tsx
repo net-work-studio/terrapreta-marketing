@@ -4,7 +4,7 @@ import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { CUSTOMERS_QUERY } from "@/sanity/lib/queries";
-import type { CUSTOMERS_QUERYResult, SanityImageHotspot } from "@/sanity/types";
+import type { CUSTOMERS_QUERY_RESULT, SanityImageHotspot } from "@/sanity/types";
 
 function getObjectPosition(hotspot?: SanityImageHotspot | null): string {
   if (!hotspot) {
@@ -23,9 +23,9 @@ export default async function Customers() {
   const validCustomers =
     customers?.filter(
       (
-        customer: CUSTOMERS_QUERYResult[number]
-      ): customer is CUSTOMERS_QUERYResult[number] & {
-        mainImage: NonNullable<CUSTOMERS_QUERYResult[number]["mainImage"]>;
+        customer: CUSTOMERS_QUERY_RESULT[number]
+      ): customer is CUSTOMERS_QUERY_RESULT[number] & {
+        mainImage: NonNullable<CUSTOMERS_QUERY_RESULT[number]["mainImage"]>;
         name: string;
       } =>
         customer.mainImage !== null &&
@@ -47,9 +47,9 @@ export default async function Customers() {
       <div className="md grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {validCustomers.map(
           (
-            customer: CUSTOMERS_QUERYResult[number] & {
+            customer: CUSTOMERS_QUERY_RESULT[number] & {
               mainImage: NonNullable<
-                CUSTOMERS_QUERYResult[number]["mainImage"]
+                CUSTOMERS_QUERY_RESULT[number]["mainImage"]
               >;
               name: string;
             }
