@@ -23,12 +23,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return generateMetadataHelper({
     title: siteSettings?.seo?.metaTitle || siteSettings?.name || "Terrapreta",
-    description:
-      siteSettings?.seo?.metaDescription ||
-      siteSettings?.description ||
-      undefined,
-    image:
-      siteSettings?.seo?.ogImage ?? siteSettings?.defaultOgImage ?? undefined,
+    description: siteSettings?.seo?.metaDescription || undefined,
+    image: siteSettings?.seo?.ogImage ?? undefined,
     url: "/",
     siteSettings,
     canonicalUrl: siteSettings?.seo?.canonicalUrl ?? undefined,

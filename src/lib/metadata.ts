@@ -84,11 +84,8 @@ export function generateMetadata({
   // Use site settings as fallbacks with hardcoded values as last resort
   const siteName = siteSettings?.name || SITE_DEFAULTS.name;
   const defaultDescription =
-    siteSettings?.description ||
-    siteSettings?.seo?.metaDescription ||
-    SITE_DEFAULTS.description;
-  const defaultImage =
-    siteSettings?.defaultOgImage || siteSettings?.seo?.ogImage || null;
+    siteSettings?.seo?.metaDescription || SITE_DEFAULTS.description;
+  const defaultImage = siteSettings?.seo?.ogImage || null;
 
   const finalDescription = description || defaultDescription;
   const finalTwitterCard =

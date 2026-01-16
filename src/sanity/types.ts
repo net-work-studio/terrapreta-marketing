@@ -333,14 +333,6 @@ export type Site = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  description?: string;
-  defaultOgImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
   seo?: SeoObject;
 };
 
@@ -810,16 +802,9 @@ export type SERVICES_SITEMAP_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "site" && _id == "site"][0]{  name,  description,  defaultOgImage{    asset->{      _id,      url    }  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    ogTitle,    ogDescription,    twitterCard  }}
+// Query: *[_type == "site" && _id == "site"][0]{  name,  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    ogTitle,    ogDescription,    twitterCard  }}
 export type SITE_SETTINGS_QUERY_RESULT = {
   name: string;
-  description: string | null;
-  defaultOgImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-  } | null;
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
@@ -1371,7 +1356,7 @@ declare module "@sanity/client" {
     '*[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': PROJECTS_SITEMAP_QUERY_RESULT;
     '*[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': JOURNAL_SITEMAP_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': SERVICES_SITEMAP_QUERY_RESULT;
-    '*[_type == "site" && _id == "site"][0]{\n  name,\n  description,\n  defaultOgImage{\n    asset->{\n      _id,\n      url\n    }\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "site" && _id == "site"][0]{\n  name,\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "project" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
     '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
     '*[_type == "journal" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    ...,\n    _type == "block" => {\n      ...,\n      markDefs[]{\n        ...,\n        _type == "internalLink" => {\n          ...,\n          "slug": reference->slug.current,\n          "type": reference->_type\n        }\n      }\n    },\n    _type == "imageObject" => {\n      ...,\n      image{\n        ...,\n        hotspot,\n        crop,\n        asset->{\n          _id,\n          url,\n          metadata{\n            dimensions{\n              width,\n              height,\n              aspectRatio\n            }\n          }\n        }\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;

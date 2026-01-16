@@ -3,13 +3,6 @@ import { defineQuery } from "next-sanity";
 export const SITE_SETTINGS_QUERY =
   defineQuery(`*[_type == "site" && _id == "site"][0]{
   name,
-  description,
-  defaultOgImage{
-    asset->{
-      _id,
-      url
-    }
-  },
   seo{
     metaTitle,
     metaDescription,
