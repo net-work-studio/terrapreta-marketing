@@ -1,5 +1,34 @@
+import { createClient } from "@sanity/client";
 import type { NextConfig } from "next";
 import { withPlausibleProxy } from "next-plausible";
+import { apiVersion } from "./src/sanity/env";
+
+// Sanity client for fetching redirects at build time
+const sanityClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion,
+  useCdn: false,
+});
+
+// Fetch CMS-managed redirects from Sanity
+async function getSanityRedirects() {
+  try {
+    const redirects = await sanityClient.fetch<
+      Array<{ source: string; destination: string; permanent: boolean }>
+    >(
+      `*[_type == "redirect" && isActive == true] {
+        source,
+        destination,
+        permanent
+      }`
+    );
+    return redirects || [];
+  } catch (error) {
+    console.warn("Failed to fetch redirects from Sanity:", error);
+    return [];
+  }
+}
 
 const nextConfig: NextConfig = {
   images: {
@@ -16,10 +45,11 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    return [
-      // Add your redirects here
-      // Example: { source: "/old-path", destination: "/new-path", permanent: true },
-      // Example with wildcard: { source: "/blog/:slug", destination: "/journal/:slug", permanent: true },
+    // Fetch CMS-managed redirects from Sanity
+    const sanityRedirects = await getSanityRedirects();
+
+    // Legacy redirects (kept for backwards compatibility)
+    const legacyRedirects = [
       { source: "/en", destination: "/", permanent: true },
       { source: "/ita", destination: "/", permanent: true },
       { source: "/en/journal", destination: "/journal", permanent: true },
@@ -85,6 +115,9 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
+
+    // CMS redirects take precedence over legacy redirects
+    return [...sanityRedirects, ...legacyRedirects];
   },
 };
 

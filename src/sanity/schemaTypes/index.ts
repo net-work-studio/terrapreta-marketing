@@ -11,6 +11,7 @@ import { pageDoc } from "./documents/pageDoc";
 import { pressDoc } from "./documents/pressDoc";
 import { processDoc } from "./documents/processDoc";
 import { projectDoc } from "./documents/projectDoc";
+import { redirectDoc } from "./documents/redirectDoc";
 import { researchDoc } from "./documents/researchDoc";
 import { serviceDoc } from "./documents/serviceDoc";
 import { siteDoc } from "./documents/siteDoc";
@@ -48,6 +49,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     organizationDoc,
     unGoalDoc,
     customerDoc,
+    redirectDoc,
 
     /* Objects */
     titleSlugObject,

@@ -13,7 +13,7 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
-import { PortableImage } from "@/components/ui/portable-image";
+import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -147,11 +147,7 @@ export default async function Page({
         {projectItem?.pageContent?.content && (
           <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
             <PortableText
-              components={{
-                types: {
-                  imageObject: PortableImage,
-                },
-              }}
+              components={portableTextComponents}
               value={projectItem.pageContent.content}
             />
           </section>

@@ -99,6 +99,17 @@ export const JOURNAL_ITEM_QUERY =
   shortDescription,
   contentObject[]{
     ...,
+    _type == "block" => {
+      ...,
+      markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          ...,
+          "slug": reference->slug.current,
+          "type": reference->_type
+        }
+      }
+    },
     _type == "imageObject" => {
       ...,
       image{
@@ -179,6 +190,17 @@ export const SERVICE_QUERY =
 
   content[]{
     ...,
+    _type == "block" => {
+      ...,
+      markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          ...,
+          "slug": reference->slug.current,
+          "type": reference->_type
+        }
+      }
+    },
     _type == "imageObject" => {
       ...,
       image{
@@ -267,6 +289,17 @@ export const PROJECT_ITEM_QUERY =
   pageContent{
     content[]{
       ...,
+      _type == "block" => {
+        ...,
+        markDefs[]{
+          ...,
+          _type == "internalLink" => {
+            ...,
+            "slug": reference->slug.current,
+            "type": reference->_type
+          }
+        }
+      },
       _type == "imageObject" => {
         ...,
         image{

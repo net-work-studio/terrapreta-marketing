@@ -6,7 +6,7 @@ import { PortableText } from "next-sanity";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Button } from "@/components/ui/button";
-import { PortableImage } from "@/components/ui/portable-image";
+import { portableTextComponents } from "@/components/ui/portable-text-components";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
@@ -199,11 +199,7 @@ export default async function Page({
         <div className="flex flex-col items-start justify-center space-y-5 text-lg md:text-xl lg:text-2xl">
           {service?.content && (
             <PortableText
-              components={{
-                types: {
-                  imageObject: PortableImage,
-                },
-              }}
+              components={portableTextComponents}
               value={service.content}
             />
           )}

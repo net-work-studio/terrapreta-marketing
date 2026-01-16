@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
+import { richTextBlock } from "../helpers/richTextBlock";
 
 export const journalDoc = defineType({
   type: "document",
@@ -74,10 +75,7 @@ export const journalDoc = defineType({
       title: "Content",
       group: "content",
       validation: (e) => e.required(),
-      of: [
-        defineArrayMember({ type: "block" }),
-        defineArrayMember({ type: "imageObject" }),
-      ],
+      of: [richTextBlock, defineArrayMember({ type: "imageObject" })],
     }),
     defineField({
       type: "reference",

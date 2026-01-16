@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { richTextBlock } from "../helpers/richTextBlock";
 
 const MAX_CAPABILITIES = 6;
 
@@ -58,10 +59,7 @@ export const serviceDoc = defineType({
       type: "array",
       name: "content",
       title: "Content",
-      of: [
-        defineArrayMember({ type: "block" }),
-        defineArrayMember({ type: "imageObject" }),
-      ],
+      of: [richTextBlock, defineArrayMember({ type: "imageObject" })],
     }),
     defineField({
       type: "array",

@@ -1,4 +1,5 @@
 import {
+  ArrowRightLeft,
   Building,
   FileStack,
   Flag,
@@ -68,5 +69,8 @@ export const structure = structureTool({
         S.divider(),
 
         S.documentTypeListItem("navigation").title("Navigations").icon(Link),
+        S.documentTypeListItem("redirect")
+          .title("Redirects")
+          .icon(ArrowRightLeft),
       ]),
 });
