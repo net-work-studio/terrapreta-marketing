@@ -34,12 +34,18 @@ export const redirectDoc = defineType({
         }),
     }),
     defineField({
-      type: "boolean",
+      type: "string",
       name: "permanent",
-      title: "Permanent Redirect (308)",
-      description:
-        "Enable for permanent redirects (308). Disable for temporary redirects (307).",
-      initialValue: true,
+      title: "Redirect Type",
+      description: "Choose redirect type: 308 for permanent, 307 for temporary",
+      options: {
+        list: [
+          { title: "Permanent (308)", value: "permanent" },
+          { title: "Temporary (307)", value: "temporary" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "permanent",
     }),
     defineField({
       type: "string",
@@ -74,7 +80,7 @@ export const redirectDoc = defineType({
     prepare({ source, destination, permanent, isActive }) {
       return {
         title: `${source} → ${destination}`,
-        subtitle: `${permanent ? "308" : "307"} ${isActive === "inactive" ? "(inactive)" : ""}`,
+        subtitle: `${permanent === "permanent" ? "308" : "307"} ${isActive === "inactive" ? "(inactive)" : ""}`,
       };
     },
   },

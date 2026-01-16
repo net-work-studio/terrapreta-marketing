@@ -25,9 +25,16 @@ export const richTextBlock = defineArrayMember({
           },
           {
             name: "blank",
-            type: "boolean",
+            type: "string",
             title: "Open in new tab",
-            initialValue: true,
+            options: {
+              list: [
+                { title: "Yes", value: "true" },
+                { title: "No", value: "false" },
+              ],
+              layout: "radio",
+            },
+            initialValue: "true",
           },
         ],
       },

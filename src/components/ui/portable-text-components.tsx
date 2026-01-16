@@ -29,7 +29,7 @@ export const portableTextComponents: PortableTextComponents = {
   marks: {
     link: ({ children, value }) => {
       const href = value?.href || "#";
-      const blank = value?.blank;
+      const blank = value?.blank === "true";
       return (
         <a
           className="underline underline-offset-4 transition-colors hover:text-stone-400"

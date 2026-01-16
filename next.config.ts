@@ -15,7 +15,7 @@ const sanityClient = createClient({
 async function getSanityRedirects() {
   try {
     const redirects = await sanityClient.fetch<
-      Array<{ source: string; destination: string; permanent: boolean }>
+      Array<{ source: string; destination: string; permanent: string }>
     >(
       `*[_type == "redirect" && isActive == "active"] {
         source,
@@ -23,7 +23,10 @@ async function getSanityRedirects() {
         permanent
       }`
     );
-    return redirects || [];
+    return (redirects || []).map((r) => ({
+      ...r,
+      permanent: r.permanent === "permanent",
+    }));
   } catch {
     return [];
   }
