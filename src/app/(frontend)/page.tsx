@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  EcosystemRestorationJsonLd,
+  NatureBasedSolutionsJsonLd,
+  SoilHealthJsonLd,
+} from "@/components/shared/domain-json-ld";
+import { JsonLd } from "@/components/shared/json-ld";
 import { Button } from "@/components/ui/button";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { getSiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
 import Customers from "./_sections/customers";
 import HomeHero from "./_sections/home-hero";
@@ -11,12 +18,27 @@ import PilotProject from "./_sections/pilot-project";
 import Services from "./_sections/services";
 import SoilRevolution from "./_sections/soil-revolution";
 
-export const metadata: Metadata = generateMetadataHelper({
-  title: "Terrapreta — Soil-based Solutions",
-  description:
-    "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
-  url: "/",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const siteSettings = await getSiteSettings();
+
+  return generateMetadataHelper({
+    title: siteSettings?.seo?.metaTitle || siteSettings?.name || "Terrapreta",
+    description:
+      siteSettings?.seo?.metaDescription ||
+      siteSettings?.description ||
+      undefined,
+    image:
+      siteSettings?.seo?.ogImage ?? siteSettings?.defaultOgImage ?? undefined,
+    url: "/",
+    siteSettings,
+    canonicalUrl: siteSettings?.seo?.canonicalUrl ?? undefined,
+    robotsIndex: siteSettings?.seo?.robotsIndex ?? undefined,
+    robotsFollow: siteSettings?.seo?.robotsFollow ?? undefined,
+    ogTitle: siteSettings?.seo?.ogTitle ?? undefined,
+    ogDescription: siteSettings?.seo?.ogDescription ?? undefined,
+    twitterCard: siteSettings?.seo?.twitterCard ?? undefined,
+  });
+}
 
 interface SectionWrapperProps {
   children: React.ReactNode;
@@ -39,9 +61,29 @@ function SectionWrapper({
   );
 }
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
+
 export default function Home() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Terrapreta",
+          url: baseUrl,
+          description: "Soil-based solutions for ecosystem regeneration",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${baseUrl}/search?q={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
+        }}
+        id="website-json-ld"
+      />
+      <SoilHealthJsonLd />
+      <EcosystemRestorationJsonLd />
+      <NatureBasedSolutionsJsonLd />
       <HomeHero />
       <div className="scroll-mt-16 space-y-0" id="learn-more">
         <SectionWrapper isFirstItem>

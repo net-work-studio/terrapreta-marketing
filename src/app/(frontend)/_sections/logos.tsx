@@ -3,7 +3,7 @@ import Image from "next/image";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import type { ORGANIZATIONS_QUERYResult } from "@/sanity/types";
+import type { ORGANIZATIONS_QUERY_RESULT } from "@/sanity/types";
 
 const ORGANIZATIONS_QUERY = defineQuery(`*[_type == "organization"]{
   _id,
@@ -26,7 +26,7 @@ export default async function Logos() {
       ?.filter(
         (
           logo
-        ): logo is ORGANIZATIONS_QUERYResult[number] & {
+        ): logo is ORGANIZATIONS_QUERY_RESULT[number] & {
           name: string;
           logoDark: { asset: { url: string } };
         } =>

@@ -59,9 +59,22 @@ export default function RootLayout({
             "@type": "Organization",
             name: "Terrapreta",
             url: baseUrl,
-            logo: `${baseUrl}/images/terrapreta_hero.webp`,
+            logo: `${baseUrl}/terrapreta-logo.png`,
             description:
               "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            sameAs: [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/",
+            ],
+            knowsAbout: [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health",
+            ],
+            areaServed: "Europe",
             address: {
               "@type": "PostalAddress",
               streetAddress: "Via Valparaiso 11",

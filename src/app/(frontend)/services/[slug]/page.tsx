@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
+import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
+import { JsonLd } from "@/components/shared/json-ld";
 import { Button } from "@/components/ui/button";
 import { PortableImage } from "@/components/ui/portable-image";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { SERVICE_QUERY } from "@/sanity/lib/queries";
@@ -15,24 +18,36 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const { data: service } = await sanityFetch({
-    query: SERVICE_QUERY,
-    params: { slug },
-  });
+  const [{ data: service }, siteSettings] = await Promise.all([
+    sanityFetch({
+      query: SERVICE_QUERY,
+      params: { slug },
+    }),
+    getSiteSettings(),
+  ]);
 
   if (!service?.name) {
     return generateMetadataHelper({
       title: "Services",
       description: "Discover our services.",
       url: "/services",
+      siteSettings,
     });
   }
 
   return generateMetadataHelper({
-    title: service.name,
-    description: service.shortDescription || "Discover our services.",
-    image: service.mainImage?.image ?? undefined,
+    title: service.seo?.metaTitle || service.name,
+    description:
+      service.seo?.metaDescription || service.shortDescription || undefined,
+    image: service.seo?.ogImage ?? service.mainImage?.image ?? undefined,
     url: `/services/${slug}`,
+    canonicalUrl: service.seo?.canonicalUrl ?? undefined,
+    robotsIndex: service.seo?.robotsIndex ?? undefined,
+    robotsFollow: service.seo?.robotsFollow ?? undefined,
+    ogTitle: service.seo?.ogTitle ?? undefined,
+    ogDescription: service.seo?.ogDescription ?? undefined,
+    twitterCard: service.seo?.twitterCard ?? undefined,
+    siteSettings,
   });
 }
 
@@ -41,9 +56,10 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const { data: service } = await sanityFetch({
     query: SERVICE_QUERY,
-    params: await params,
+    params: { slug },
   });
 
   return (
@@ -189,6 +205,70 @@ export default async function Page({
           )}
         </div>
       </article>
+
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+          { name: service?.name || "Service", url: `/services/${slug}` },
+        ]}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": service?.seo?.schemaType || "Service",
+          name: service?.name,
+          description: service?.shortDescription,
+          provider: {
+            "@type": "Organization",
+            name: "Terrapreta",
+            url: "https://terrapreta.it",
+            ...(service?.seo?.customSchema?.knowsAbout && {
+              knowsAbout: service.seo.customSchema.knowsAbout
+                .split(",")
+                .map((s: string) => s.trim()),
+            }),
+          },
+          serviceType: "Environmental Consulting",
+          areaServed: {
+            "@type": "Place",
+            name: "Europe",
+          },
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Terrapreta Services",
+            itemListElement:
+              service?.seo?.customSchema?.hasOfferCatalog &&
+              service.seo.customSchema.hasOfferCatalog.length > 0
+                ? service.seo.customSchema.hasOfferCatalog.map(
+                    (item: string) => ({
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: item,
+                      },
+                    })
+                  )
+                : [
+                    {
+                      "@type": "Offer",
+                      itemOffered: {
+                        "@type": "Service",
+                        name: service?.name,
+                        description: service?.shortDescription,
+                      },
+                    },
+                  ],
+          },
+          ...(service?.mainImage?.image && {
+            image: urlFor(service.mainImage.image)
+              .width(1200)
+              .auto("format")
+              .url(),
+          }),
+        }}
+        id="service-json-ld"
+      />
     </>
   );
 }

@@ -26,6 +26,7 @@ import { contentObject } from "./objects/contentObject";
 import { gridDimensionObject } from "./objects/gridDimensionObject";
 import { imageObject } from "./objects/imageObject";
 import { linkObject } from "./objects/linkObject";
+import { seoObject } from "./objects/seoObject";
 import { titleSlugObject } from "./objects/titleSlugObject";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -54,6 +55,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     contentObject,
     gridDimensionObject,
     linkObject,
+    seoObject,
 
     /* Fragments */
     modules,

@@ -1,5 +1,33 @@
 import { defineQuery } from "next-sanity";
 
+export const SITE_SETTINGS_QUERY =
+  defineQuery(`*[_type == "site" && _id == "site"][0]{
+  name,
+  description,
+  defaultOgImage{
+    asset->{
+      _id,
+      url
+    }
+  },
+  seo{
+    metaTitle,
+    metaDescription,
+    ogImage{
+      asset->{
+        _id,
+        url
+      }
+    },
+    canonicalUrl,
+    robotsIndex,
+    robotsFollow,
+    ogTitle,
+    ogDescription,
+    twitterCard
+  }
+}`);
+
 export const PROJECTS_QUERY =
   defineQuery(`*[_type == "project" && defined(slug.current)] {
   _id,
@@ -94,6 +122,27 @@ export const JOURNAL_ITEM_QUERY =
   tag->{
     _id,
     name
+  },
+  seo{
+    metaTitle,
+    metaDescription,
+    ogImage{
+      asset->{
+        _id,
+        url
+      }
+    },
+    canonicalUrl,
+    robotsIndex,
+    robotsFollow,
+    schemaType,
+    customSchema{
+      knowsAbout,
+      hasOfferCatalog
+    },
+    ogTitle,
+    ogDescription,
+    twitterCard
   }
 }`);
 
@@ -171,6 +220,27 @@ export const SERVICE_QUERY =
         url
       }
     }
+  },
+  seo{
+    metaTitle,
+    metaDescription,
+    ogImage{
+      asset->{
+        _id,
+        url
+      }
+    },
+    canonicalUrl,
+    robotsIndex,
+    robotsFollow,
+    schemaType,
+    customSchema{
+      knowsAbout,
+      hasOfferCatalog
+    },
+    ogTitle,
+    ogDescription,
+    twitterCard
   }
 }`);
 
@@ -226,6 +296,27 @@ export const PROJECT_ITEM_QUERY =
   relatedResearch->{
     _id,
     name
+  },
+  seo{
+    metaTitle,
+    metaDescription,
+    ogImage{
+      asset->{
+        _id,
+        url
+      }
+    },
+    canonicalUrl,
+    robotsIndex,
+    robotsFollow,
+    schemaType,
+    customSchema{
+      knowsAbout,
+      hasOfferCatalog
+    },
+    ogTitle,
+    ogDescription,
+    twitterCard
   }
 }`);
 

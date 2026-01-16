@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { UN_GOALS_QUERY } from "@/sanity/lib/queries";
-import type { UN_GOALS_QUERYResult } from "@/sanity/types";
+import type { UN_GOALS_QUERY_RESULT } from "@/sanity/types";
 
 export default async function Footer() {
   const { data: unGoals } = await sanityFetch({ query: UN_GOALS_QUERY });
@@ -15,7 +15,7 @@ export default async function Footer() {
       ?.filter(
         (
           goal
-        ): goal is UN_GOALS_QUERYResult[number] & {
+        ): goal is UN_GOALS_QUERY_RESULT[number] & {
           logoNegative: { asset: { url: string } };
         } =>
           Boolean(

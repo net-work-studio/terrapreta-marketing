@@ -30,5 +30,16 @@ export const pageDoc = defineType({
     defineField({
       ...modules,
     }),
+    defineField({
+      type: "seoObject",
+      name: "seo",
+      title: "SEO",
+      description: "Search engine optimization settings",
+      initialValue: {
+        robotsIndex: "index",
+        robotsFollow: "follow",
+        twitterCard: "summary_large_image",
+      },
+    }),
   ],
 });

@@ -12,56 +12,117 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
+// Source: src/sanity/extract.json
+export type CustomSchema = {
+  knowsAbout?: string;
+  hasOfferCatalog?: Array<string>;
+};
+
 export type HeroSplitModule = {
   _type: "heroSplitModule";
   name: string;
 };
 
-export type Modules = Array<{
-  _key: string;
-} & HeroSplitModule>;
+export type Modules = Array<
+  {
+    _key: string;
+  } & HeroSplitModule
+>;
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type SeoObject = {
+  _type: "seoObject";
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  canonicalUrl?: string;
+  robotsIndex?: "index" | "noindex";
+  robotsFollow?: "follow" | "nofollow";
+  schemaType?:
+    | "Organization"
+    | "Service"
+    | "Project"
+    | "Article"
+    | "LocalBusiness";
+  customSchema?: CustomSchema;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterCard?: "summary_large_image" | "summary";
+};
+
+export type PageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "page";
+};
+
+export type AboutReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "about";
+};
+
+export type JournalReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "journal";
+};
+
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
+export type ServiceReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "service";
+};
+
+export type ResearchReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "research";
+};
+
+export type PressReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "press";
+};
 
 export type LinkObject = {
   _type: "linkObject";
   name: string;
   type: "internal" | "external";
-  page?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "about";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "journal";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "project";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "service";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "research";
-  } | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "press";
-  };
+  page?:
+    | PageReference
+    | AboutReference
+    | JournalReference
+    | ProjectReference
+    | ServiceReference
+    | ResearchReference
+    | PressReference;
   href?: string;
   target: "_self" | "_blank";
 };
@@ -73,37 +134,43 @@ export type GridDimensionObject = {
 
 export type ContentObject = {
   _type: "contentObject";
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & ImageObject>;
+  content: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & ImageObject)
+  >;
 };
 
 export type ImageObject = {
   _type: "imageObject";
   image: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -127,12 +194,7 @@ export type Customer = {
   _rev: string;
   name: string;
   mainImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -165,24 +227,14 @@ export type UnGoal = {
   _rev: string;
   name: string;
   logoPositive: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
   logoNegative: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -199,24 +251,14 @@ export type Organization = {
   name: string;
   type: "client" | "partner" | "sponsor";
   logoDark: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
   logoLight?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -231,9 +273,11 @@ export type Navigation = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  links?: Array<{
-    _key: string;
-  } & LinkObject>;
+  links?: Array<
+    {
+      _key: string;
+    } & LinkObject
+  >;
 };
 
 export type Process = {
@@ -279,6 +323,15 @@ export type Site = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  description?: string;
+  defaultOgImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  seo?: SeoObject;
 };
 
 export type Page = {
@@ -290,9 +343,12 @@ export type Page = {
   name: string;
   slug: Slug;
   mainImage: ImageObject;
-  modules?: Array<{
-    _key: string;
-  } & HeroSplitModule>;
+  modules?: Array<
+    {
+      _key: string;
+    } & HeroSplitModule
+  >;
+  seo?: SeoObject;
 };
 
 export type Slug = {
@@ -313,6 +369,13 @@ export type Glossary = {
   definition?: string;
 };
 
+export type TagReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tag";
+};
+
 export type Journal = {
   _id: string;
   _type: "journal";
@@ -322,54 +385,46 @@ export type Journal = {
   name: string;
   slug: Slug;
   gridDimension?: GridDimensionObject;
-  tag: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "tag";
-  };
+  tag: TagReference;
   location: string;
   publishingDate: string;
   mainImage: ImageObject;
   shortDescription: string;
-  contentObject: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & ImageObject>;
-  relatedService?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "service";
-  };
-  relatedProject?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "project";
-  };
-  relatedResearch?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "research";
-  };
+  contentObject: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & ImageObject)
+  >;
+  relatedService?: ServiceReference;
+  relatedProject?: ProjectReference;
+  relatedResearch?: ResearchReference;
+  seo?: SeoObject;
 };
 
 export type Project = {
@@ -381,24 +436,20 @@ export type Project = {
   name: string;
   slug: Slug;
   mainImage: ImageObject;
-  status: "on-hold" | "in-progress" | "in-construction" | "completed" | "cancelled";
+  status:
+    | "on-hold"
+    | "in-progress"
+    | "in-construction"
+    | "completed"
+    | "cancelled";
   location?: string;
   areaRestored?: string;
   interventionType?: string;
   shortDescription?: string;
   pageContent?: ContentObject;
-  relatedService?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "service";
-  };
-  relatedResearch?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "research";
-  };
+  relatedService?: ServiceReference;
+  relatedResearch?: ResearchReference;
+  seo?: SeoObject;
 };
 
 export type Research = {
@@ -409,18 +460,22 @@ export type Research = {
   _rev: string;
   titleSlug: TitleSlugObject;
   mainImage: ImageObject;
-  relatedService?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "service";
-  };
-  relatedProject?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "project";
-  };
+  relatedService?: ServiceReference;
+  relatedProject?: ProjectReference;
+};
+
+export type OrganizationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "organization";
+};
+
+export type CapabilityReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "capability";
 };
 
 export type Service = {
@@ -433,54 +488,58 @@ export type Service = {
   slug: Slug;
   shortDescription?: string;
   mainImage: ImageObject;
-  clients?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "organization";
-  }>;
-  capabilities?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "capability";
-  }>;
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
+  clients?: Array<
+    {
       _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
+    } & OrganizationReference
+  >;
+  capabilities?: Array<
+    {
       _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & ImageObject>;
-  relatedProject?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "project";
-  }>;
-  relatedResearch?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "research";
-  }>;
+    } & CapabilityReference
+  >;
+  content?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & ImageObject)
+  >;
+  relatedProject?: Array<
+    {
+      _key: string;
+    } & ProjectReference
+  >;
+  relatedResearch?: Array<
+    {
+      _key: string;
+    } & ResearchReference
+  >;
+  seo?: SeoObject;
 };
 
 export type Tag = {
@@ -598,12 +657,62 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = HeroSplitModule | Modules | LinkObject | GridDimensionObject | ContentObject | ImageObject | TitleSlugObject | Customer | SanityImageCrop | SanityImageHotspot | UnGoal | Organization | Navigation | Process | Capability | About | Press | Site | Page | Slug | Glossary | Journal | Project | Research | Service | Tag | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | CustomSchema
+  | HeroSplitModule
+  | Modules
+  | SanityImageAssetReference
+  | SeoObject
+  | PageReference
+  | AboutReference
+  | JournalReference
+  | ProjectReference
+  | ServiceReference
+  | ResearchReference
+  | PressReference
+  | LinkObject
+  | GridDimensionObject
+  | ContentObject
+  | ImageObject
+  | TitleSlugObject
+  | Customer
+  | SanityImageCrop
+  | SanityImageHotspot
+  | UnGoal
+  | Organization
+  | Navigation
+  | Process
+  | Capability
+  | About
+  | Press
+  | Site
+  | Page
+  | Slug
+  | Glossary
+  | TagReference
+  | Journal
+  | Project
+  | Research
+  | OrganizationReference
+  | CapabilityReference
+  | Service
+  | Tag
+  | MediaTag
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/app/(frontend)/_sections/logos.tsx
+
+// Source: src/app/(frontend)/_sections/logos.tsx
 // Variable: ORGANIZATIONS_QUERY
 // Query: *[_type == "organization"]{  _id,  name,  type,  logoDark{    _type,    asset->{      _id,      url,    }  },}
-export type ORGANIZATIONS_QUERYResult = Array<{
+export type ORGANIZATIONS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   type: "client" | "partner" | "sponsor";
@@ -616,30 +725,64 @@ export type ORGANIZATIONS_QUERYResult = Array<{
   };
 }>;
 
-// Source: ./src/app/sitemap.ts
+// Source: src/app/sitemap.ts
 // Variable: PROJECTS_SITEMAP_QUERY
 // Query: *[_type == "project" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
-export type PROJECTS_SITEMAP_QUERYResult = Array<{
-  slug: string;
-  _updatedAt: string;
-}>;
-// Variable: JOURNAL_SITEMAP_QUERY
-// Query: *[_type == "journal" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
-export type JOURNAL_SITEMAP_QUERYResult = Array<{
-  slug: string;
-  _updatedAt: string;
-}>;
-// Variable: SERVICES_SITEMAP_QUERY
-// Query: *[_type == "service" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
-export type SERVICES_SITEMAP_QUERYResult = Array<{
+export type PROJECTS_SITEMAP_QUERY_RESULT = Array<{
   slug: string;
   _updatedAt: string;
 }>;
 
-// Source: ./src/sanity/lib/queries.ts
+// Source: src/app/sitemap.ts
+// Variable: JOURNAL_SITEMAP_QUERY
+// Query: *[_type == "journal" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
+export type JOURNAL_SITEMAP_QUERY_RESULT = Array<{
+  slug: string;
+  _updatedAt: string;
+}>;
+
+// Source: src/app/sitemap.ts
+// Variable: SERVICES_SITEMAP_QUERY
+// Query: *[_type == "service" && defined(slug.current)] {    "slug": slug.current,    _updatedAt  }
+export type SERVICES_SITEMAP_QUERY_RESULT = Array<{
+  slug: string;
+  _updatedAt: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_type == "site" && _id == "site"][0]{  name,  description,  defaultOgImage{    asset->{      _id,      url    }  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    ogTitle,    ogDescription,    twitterCard  }}
+export type SITE_SETTINGS_QUERY_RESULT = {
+  name: string;
+  description: string | null;
+  defaultOgImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    ogImage: {
+      asset: {
+        _id: string;
+        url: string | null;
+      } | null;
+    } | null;
+    canonicalUrl: string | null;
+    robotsIndex: "index" | "noindex" | null;
+    robotsFollow: "follow" | "nofollow" | null;
+    ogTitle: string | null;
+    ogDescription: string | null;
+    twitterCard: "summary_large_image" | "summary" | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
 // Query: *[_type == "project" && defined(slug.current)] {  _id,  name,  slug,  shortDescription,  gridDimension{    isBig  },  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  tag->{    _id,    name  }}
-export type PROJECTS_QUERYResult = Array<{
+export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   slug: Slug;
@@ -657,9 +800,11 @@ export type PROJECTS_QUERYResult = Array<{
   };
   tag: null;
 }>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_QUERY
 // Query: *[_type == "journal" && defined(slug.current)] | order(publishingDate desc){  _id,  name,  slug,  shortDescription,  gridDimension{    isBig  },  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  publishingDate,  tag->{    _id,    name  }}
-export type JOURNAL_QUERYResult = Array<{
+export type JOURNAL_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   slug: Slug;
@@ -683,9 +828,11 @@ export type JOURNAL_QUERYResult = Array<{
     name: string;
   };
 }>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_ITEM_QUERY
-// Query: *[_type == "journal" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  location,  publishingDate,  shortDescription,  contentObject[]{    ...,    _type == "imageObject" => {      ...,      image{        ...,        hotspot,        crop,        asset->{          _id,          url,          metadata{            dimensions{              width,              height,              aspectRatio            }          }        }      }    }  },  tag->{    _id,    name  }}
-export type JOURNAL_ITEM_QUERYResult = {
+// Query: *[_type == "journal" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  location,  publishingDate,  shortDescription,  contentObject[]{    ...,    _type == "imageObject" => {      ...,      image{        ...,        hotspot,        crop,        asset->{          _id,          url,          metadata{            dimensions{              width,              height,              aspectRatio            }          }        }      }    }  },  tag->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+export type JOURNAL_ITEM_QUERY_RESULT = {
   _id: string;
   name: string;
   slug: Slug;
@@ -702,61 +849,103 @@ export type JOURNAL_ITEM_QUERYResult = {
   location: string;
   publishingDate: string;
   shortDescription: string;
-  contentObject: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-    _type: "imageObject";
-    image: {
-      asset: {
-        _id: string;
-        url: string | null;
-        metadata: {
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
+  contentObject: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "imageObject";
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            metadata: {
+              dimensions: {
+                width: number;
+                height: number;
+                aspectRatio: number;
+              } | null;
+            } | null;
           } | null;
-        } | null;
-      } | null;
-      media?: unknown;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      _type: "image";
-    };
-    altContent?: string;
-    caption?: string;
-  }>;
+          media?: unknown;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          _type: "image";
+        };
+        altContent?: string;
+        caption?: string;
+      }
+  >;
   tag: {
     _id: string;
     name: string;
   };
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    ogImage: {
+      asset: {
+        _id: string;
+        url: string | null;
+      } | null;
+    } | null;
+    canonicalUrl: string | null;
+    robotsIndex: "index" | "noindex" | null;
+    robotsFollow: "follow" | "nofollow" | null;
+    schemaType:
+      | "Article"
+      | "LocalBusiness"
+      | "Organization"
+      | "Project"
+      | "Service"
+      | null;
+    customSchema: {
+      knowsAbout: string | null;
+      hasOfferCatalog: Array<string> | null;
+    } | null;
+    ogTitle: string | null;
+    ogDescription: string | null;
+    twitterCard: "summary_large_image" | "summary" | null;
+  } | null;
 } | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: TAGS_QUERY
 // Query: *[_type == "tag"] | order(name asc){  _id,  name,  slug}
-export type TAGS_QUERYResult = Array<{
+export type TAGS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   slug: Slug;
 }>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: SERVICES_QUERY
 // Query: *[_type == "service" && defined(slug.current)] | order(name asc){  _id,  name,  slug,  shortDescription,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  }}
-export type SERVICES_QUERYResult = Array<{
+export type SERVICES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   slug: Slug;
@@ -772,53 +961,66 @@ export type SERVICES_QUERYResult = Array<{
     };
   };
 }>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: SERVICE_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{  _id,  name,  slug,  shortDescription,  content[]{    ...,    _type == "imageObject" => {      ...,      image{        ...,        hotspot,        crop,        asset->{          _id,          url,          metadata{            dimensions{              width,              height,              aspectRatio            }          }        }      }    }  },  capabilities[]->{    _id,    name  },  clients[]->{    _id,    name,    logoDark{      asset->{        _id,        _type,        url      }    }  },  mainImage{    image{      asset->{        url      }    }  }}
-export type SERVICE_QUERYResult = {
+// Query: *[_type == "service" && slug.current == $slug][0]{  _id,  name,  slug,  shortDescription,  content[]{    ...,    _type == "imageObject" => {      ...,      image{        ...,        hotspot,        crop,        asset->{          _id,          url,          metadata{            dimensions{              width,              height,              aspectRatio            }          }        }      }    }  },  capabilities[]->{    _id,    name  },  clients[]->{    _id,    name,    logoDark{      asset->{        _id,        _type,        url      }    }  },  mainImage{    image{      asset->{        url      }    }  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+export type SERVICE_QUERY_RESULT = {
   _id: string;
   name: string;
   slug: Slug;
   shortDescription: string | null;
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-    _type: "imageObject";
-    image: {
-      asset: {
-        _id: string;
-        url: string | null;
-        metadata: {
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
+  content: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "imageObject";
+        image: {
+          asset: {
+            _id: string;
+            url: string | null;
+            metadata: {
+              dimensions: {
+                width: number;
+                height: number;
+                aspectRatio: number;
+              } | null;
+            } | null;
           } | null;
-        } | null;
-      } | null;
-      media?: unknown;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      _type: "image";
-    };
-    altContent?: string;
-    caption?: string;
-  }> | null;
+          media?: unknown;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          _type: "image";
+        };
+        altContent?: string;
+        caption?: string;
+      }
+  > | null;
   capabilities: Array<{
     _id: string;
     name: string;
@@ -841,10 +1043,39 @@ export type SERVICE_QUERYResult = {
       } | null;
     };
   };
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    ogImage: {
+      asset: {
+        _id: string;
+        url: string | null;
+      } | null;
+    } | null;
+    canonicalUrl: string | null;
+    robotsIndex: "index" | "noindex" | null;
+    robotsFollow: "follow" | "nofollow" | null;
+    schemaType:
+      | "Article"
+      | "LocalBusiness"
+      | "Organization"
+      | "Project"
+      | "Service"
+      | null;
+    customSchema: {
+      knowsAbout: string | null;
+      hasOfferCatalog: Array<string> | null;
+    } | null;
+    ogTitle: string | null;
+    ogDescription: string | null;
+    twitterCard: "summary_large_image" | "summary" | null;
+  } | null;
 } | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_ITEM_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  status,  location,  areaRestored,  interventionType,  shortDescription,  pageContent{    content[]{      ...,      _type == "imageObject" => {        ...,        image{          ...,          hotspot,          crop,          asset->{            _id,            url,            metadata{              dimensions{                width,                height,                aspectRatio              }            }          }        }      }    }  },  relatedService->{    _id,    name,    slug  },  relatedResearch->{    _id,    name  }}
-export type PROJECT_ITEM_QUERYResult = {
+// Query: *[_type == "project" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    _type,    image{      _type,      asset->{        _id,        url      }    }  },  status,  location,  areaRestored,  interventionType,  shortDescription,  pageContent{    content[]{      ...,      _type == "imageObject" => {        ...,        image{          ...,          hotspot,          crop,          asset->{            _id,            url,            metadata{              dimensions{                width,                height,                aspectRatio              }            }          }        }      }    }  },  relatedService->{    _id,    name,    slug  },  relatedResearch->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+export type PROJECT_ITEM_QUERY_RESULT = {
   _id: string;
   name: string;
   slug: Slug;
@@ -858,52 +1089,68 @@ export type PROJECT_ITEM_QUERYResult = {
       } | null;
     };
   };
-  status: "cancelled" | "completed" | "in-construction" | "in-progress" | "on-hold";
+  status:
+    | "cancelled"
+    | "completed"
+    | "in-construction"
+    | "in-progress"
+    | "on-hold";
   location: string | null;
   areaRestored: string | null;
   interventionType: string | null;
   shortDescription: string | null;
   pageContent: {
-    content: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      _key: string;
-      _type: "imageObject";
-      image: {
-        asset: {
-          _id: string;
-          url: string | null;
-          metadata: {
-            dimensions: {
-              width: number;
-              height: number;
-              aspectRatio: number;
+    content: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?:
+            | "blockquote"
+            | "h1"
+            | "h2"
+            | "h3"
+            | "h4"
+            | "h5"
+            | "h6"
+            | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }
+      | {
+          _key: string;
+          _type: "imageObject";
+          image: {
+            asset: {
+              _id: string;
+              url: string | null;
+              metadata: {
+                dimensions: {
+                  width: number;
+                  height: number;
+                  aspectRatio: number;
+                } | null;
+              } | null;
             } | null;
-          } | null;
-        } | null;
-        media?: unknown;
-        hotspot: SanityImageHotspot | null;
-        crop: SanityImageCrop | null;
-        _type: "image";
-      };
-      altContent?: string;
-      caption?: string;
-    }>;
+            media?: unknown;
+            hotspot: SanityImageHotspot | null;
+            crop: SanityImageCrop | null;
+            _type: "image";
+          };
+          altContent?: string;
+          caption?: string;
+        }
+    >;
   } | null;
   relatedService: {
     _id: string;
@@ -914,10 +1161,39 @@ export type PROJECT_ITEM_QUERYResult = {
     _id: string;
     name: null;
   } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    ogImage: {
+      asset: {
+        _id: string;
+        url: string | null;
+      } | null;
+    } | null;
+    canonicalUrl: string | null;
+    robotsIndex: "index" | "noindex" | null;
+    robotsFollow: "follow" | "nofollow" | null;
+    schemaType:
+      | "Article"
+      | "LocalBusiness"
+      | "Organization"
+      | "Project"
+      | "Service"
+      | null;
+    customSchema: {
+      knowsAbout: string | null;
+      hasOfferCatalog: Array<string> | null;
+    } | null;
+    ogTitle: string | null;
+    ogDescription: string | null;
+    twitterCard: "summary_large_image" | "summary" | null;
+  } | null;
 } | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: UN_GOALS_QUERY
 // Query: *[_type == "unGoal"] | order(name asc){  _id,  name,  logoNegative{    _type,    asset->{      _id,      url    }  },  logoPositive{    _type,    asset->{      _id,      url    }  }}
-export type UN_GOALS_QUERYResult = Array<{
+export type UN_GOALS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   logoNegative: {
@@ -935,9 +1211,11 @@ export type UN_GOALS_QUERYResult = Array<{
     } | null;
   };
 }>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: CUSTOMERS_QUERY
 // Query: *[_type == "customer"] | order(name asc){  _id,  name,  shortDescription,  mainImage{    hotspot,    crop,    asset->{      _id,      url    }  }}
-export type CUSTOMERS_QUERYResult = Array<{
+export type CUSTOMERS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   shortDescription: string | null;
@@ -955,18 +1233,19 @@ export type CUSTOMERS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"organization\"]{\n  _id,\n  name,\n  type,\n  logoDark{\n    _type,\n    asset->{\n      _id,\n      url,\n    }\n  },\n}": ORGANIZATIONS_QUERYResult;
-    "*[_type == \"project\" && defined(slug.current)] {\n    \"slug\": slug.current,\n    _updatedAt\n  }": PROJECTS_SITEMAP_QUERYResult;
-    "*[_type == \"journal\" && defined(slug.current)] {\n    \"slug\": slug.current,\n    _updatedAt\n  }": JOURNAL_SITEMAP_QUERYResult;
-    "*[_type == \"service\" && defined(slug.current)] {\n    \"slug\": slug.current,\n    _updatedAt\n  }": SERVICES_SITEMAP_QUERYResult;
-    "*[_type == \"project\" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}": PROJECTS_QUERYResult;
-    "*[_type == \"journal\" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}": JOURNAL_QUERYResult;
-    "*[_type == \"journal\" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    ...,\n    _type == \"imageObject\" => {\n      ...,\n      image{\n        ...,\n        hotspot,\n        crop,\n        asset->{\n          _id,\n          url,\n          metadata{\n            dimensions{\n              width,\n              height,\n              aspectRatio\n            }\n          }\n        }\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}": JOURNAL_ITEM_QUERYResult;
-    "*[_type == \"tag\"] | order(name asc){\n  _id,\n  name,\n  slug\n}": TAGS_QUERYResult;
-    "*[_type == \"service\" && defined(slug.current)] | order(name asc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n}": SERVICES_QUERYResult;
-    "*[_type == \"service\" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  shortDescription,\n\n  content[]{\n    ...,\n    _type == \"imageObject\" => {\n      ...,\n      image{\n        ...,\n        hotspot,\n        crop,\n        asset->{\n          _id,\n          url,\n          metadata{\n            dimensions{\n              width,\n              height,\n              aspectRatio\n            }\n          }\n        }\n      }\n    }\n  },\n  capabilities[]->{\n    _id,\n    name\n  },\n  clients[]->{\n    _id,\n    name,\n    logoDark{\n      asset->{\n        _id,\n        _type,\n        url\n      }\n    }\n  },\n  mainImage{\n    image{\n      asset->{\n        url\n      }\n    }\n  }\n}": SERVICE_QUERYResult;
-    "*[_type == \"project\" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  status,\n  location,\n  areaRestored,\n  interventionType,\n  shortDescription,\n  pageContent{\n    content[]{\n      ...,\n      _type == \"imageObject\" => {\n        ...,\n        image{\n          ...,\n          hotspot,\n          crop,\n          asset->{\n            _id,\n            url,\n            metadata{\n              dimensions{\n                width,\n                height,\n                aspectRatio\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  relatedService->{\n    _id,\n    name,\n    slug\n  },\n  relatedResearch->{\n    _id,\n    name\n  }\n}": PROJECT_ITEM_QUERYResult;
-    "*[_type == \"unGoal\"] | order(name asc){\n  _id,\n  name,\n  logoNegative{\n    _type,\n    asset->{\n      _id,\n      url\n    }\n  },\n  logoPositive{\n    _type,\n    asset->{\n      _id,\n      url\n    }\n  }\n}": UN_GOALS_QUERYResult;
-    "*[_type == \"customer\"] | order(name asc){\n  _id,\n  name,\n  shortDescription,\n  mainImage{\n    hotspot,\n    crop,\n    asset->{\n      _id,\n      url\n    }\n  }\n}": CUSTOMERS_QUERYResult;
+    '*[_type == "organization"]{\n  _id,\n  name,\n  type,\n  logoDark{\n    _type,\n    asset->{\n      _id,\n      url,\n    }\n  },\n}': ORGANIZATIONS_QUERY_RESULT;
+    '*[_type == "project" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  }': PROJECTS_SITEMAP_QUERY_RESULT;
+    '*[_type == "journal" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  }': JOURNAL_SITEMAP_QUERY_RESULT;
+    '*[_type == "service" && defined(slug.current)] {\n    "slug": slug.current,\n    _updatedAt\n  }': SERVICES_SITEMAP_QUERY_RESULT;
+    '*[_type == "site" && _id == "site"][0]{\n  name,\n  description,\n  defaultOgImage{\n    asset->{\n      _id,\n      url\n    }\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "project" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
+    '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
+    '*[_type == "journal" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    ...,\n    _type == "imageObject" => {\n      ...,\n      image{\n        ...,\n        hotspot,\n        crop,\n        asset->{\n          _id,\n          url,\n          metadata{\n            dimensions{\n              width,\n              height,\n              aspectRatio\n            }\n          }\n        }\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;
+    '*[_type == "tag"] | order(name asc){\n  _id,\n  name,\n  slug\n}': TAGS_QUERY_RESULT;
+    '*[_type == "service" && defined(slug.current)] | order(name asc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n}': SERVICES_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  shortDescription,\n\n  content[]{\n    ...,\n    _type == "imageObject" => {\n      ...,\n      image{\n        ...,\n        hotspot,\n        crop,\n        asset->{\n          _id,\n          url,\n          metadata{\n            dimensions{\n              width,\n              height,\n              aspectRatio\n            }\n          }\n        }\n      }\n    }\n  },\n  capabilities[]->{\n    _id,\n    name\n  },\n  clients[]->{\n    _id,\n    name,\n    logoDark{\n      asset->{\n        _id,\n        _type,\n        url\n      }\n    }\n  },\n  mainImage{\n    image{\n      asset->{\n        url\n      }\n    }\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SERVICE_QUERY_RESULT;
+    '*[_type == "project" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  status,\n  location,\n  areaRestored,\n  interventionType,\n  shortDescription,\n  pageContent{\n    content[]{\n      ...,\n      _type == "imageObject" => {\n        ...,\n        image{\n          ...,\n          hotspot,\n          crop,\n          asset->{\n            _id,\n            url,\n            metadata{\n              dimensions{\n                width,\n                height,\n                aspectRatio\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  relatedService->{\n    _id,\n    name,\n    slug\n  },\n  relatedResearch->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': PROJECT_ITEM_QUERY_RESULT;
+    '*[_type == "unGoal"] | order(name asc){\n  _id,\n  name,\n  logoNegative{\n    _type,\n    asset->{\n      _id,\n      url\n    }\n  },\n  logoPositive{\n    _type,\n    asset->{\n      _id,\n      url\n    }\n  }\n}': UN_GOALS_QUERY_RESULT;
+    '*[_type == "customer"] | order(name asc){\n  _id,\n  name,\n  shortDescription,\n  mainImage{\n    hotspot,\n    crop,\n    asset->{\n      _id,\n      url\n    }\n  }\n}': CUSTOMERS_QUERY_RESULT;
   }
 }
