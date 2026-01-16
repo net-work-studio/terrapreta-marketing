@@ -58,6 +58,7 @@ export const linkObject = defineType({
           { title: "Self", value: "_self" },
           { title: "Blank", value: "_blank" },
         ],
+        layout: "radio",
       },
     }),
   ],

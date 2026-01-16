@@ -768,7 +768,17 @@
                                 "blank": {
                                   "type": "objectAttribute",
                                   "value": {
-                                    "type": "boolean"
+                                    "type": "union",
+                                    "of": [
+                                      {
+                                        "type": "string",
+                                        "value": "true"
+                                      },
+                                      {
+                                        "type": "string",
+                                        "value": "false"
+                                      }
+                                    ]
                                   },
                                   "optional": true
                                 },
@@ -1067,14 +1077,34 @@
       "permanent": {
         "type": "objectAttribute",
         "value": {
-          "type": "boolean"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "permanent"
+            },
+            {
+              "type": "string",
+              "value": "temporary"
+            }
+          ]
         },
         "optional": true
       },
       "isActive": {
         "type": "objectAttribute",
         "value": {
-          "type": "boolean"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "active"
+            },
+            {
+              "type": "string",
+              "value": "inactive"
+            }
+          ]
         },
         "optional": true
       },
@@ -2133,7 +2163,17 @@
                               "blank": {
                                 "type": "objectAttribute",
                                 "value": {
-                                  "type": "boolean"
+                                  "type": "union",
+                                  "of": [
+                                    {
+                                      "type": "string",
+                                      "value": "true"
+                                    },
+                                    {
+                                      "type": "string",
+                                      "value": "false"
+                                    }
+                                  ]
                                 },
                                 "optional": true
                               },
@@ -2756,7 +2796,17 @@
                               "blank": {
                                 "type": "objectAttribute",
                                 "value": {
-                                  "type": "boolean"
+                                  "type": "union",
+                                  "of": [
+                                    {
+                                      "type": "string",
+                                      "value": "true"
+                                    },
+                                    {
+                                      "type": "string",
+                                      "value": "false"
+                                    }
+                                  ]
                                 },
                                 "optional": true
                               },

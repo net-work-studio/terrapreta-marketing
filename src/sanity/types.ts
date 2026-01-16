@@ -155,7 +155,7 @@ export type ContentObject = {
         markDefs?: Array<
           | {
               href?: string;
-              blank?: boolean;
+              blank?: "true" | "false";
               _type: "link";
               _key: string;
             }
@@ -209,8 +209,8 @@ export type Redirect = {
   _rev: string;
   source: string;
   destination: string;
-  permanent?: boolean;
-  isActive?: string;
+  permanent?: "permanent" | "temporary";
+  isActive?: "active" | "inactive";
   notes?: string;
 };
 
@@ -396,7 +396,7 @@ export type Journal = {
         markDefs?: Array<
           | {
               href?: string;
-              blank?: boolean;
+              blank?: "true" | "false";
               _type: "link";
               _key: string;
             }
@@ -507,7 +507,7 @@ export type Service = {
         markDefs?: Array<
           | {
               href?: string;
-              blank?: boolean;
+              blank?: "true" | "false";
               _type: "link";
               _key: string;
             }
@@ -936,7 +936,7 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
             }
           | {
               href?: string;
-              blank?: boolean;
+              blank?: "false" | "true";
               _type: "link";
               _key: string;
             }
@@ -1082,7 +1082,7 @@ export type SERVICE_QUERY_RESULT = {
             }
           | {
               href?: string;
-              blank?: boolean;
+              blank?: "false" | "true";
               _type: "link";
               _key: string;
             }
@@ -1237,7 +1237,7 @@ export type PROJECT_ITEM_QUERY_RESULT = {
               }
             | {
                 href?: string;
-                blank?: boolean;
+                blank?: "false" | "true";
                 _type: "link";
                 _key: string;
               }
