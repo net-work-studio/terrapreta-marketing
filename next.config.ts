@@ -33,11 +33,6 @@ async function getSanityRedirects() {
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      /* TODO remove this once we have a proper image hosting */
-      {
-        protocol: "https",
-        hostname: "placehold.co",
-      },
       {
         protocol: "https",
         hostname: "cdn.sanity.io",

@@ -1,12 +1,13 @@
 import type { SVGProps } from "react";
+
 const Mark = ({
   fill = "white",
   ...props
 }: SVGProps<SVGSVGElement> & { fill?: string }) => (
   <svg
-    viewBox="0 0 196.9 181.18"
-    fill={fill}
     className="h-full w-full"
+    fill={fill}
+    viewBox="0 0 196.9 181.18"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
