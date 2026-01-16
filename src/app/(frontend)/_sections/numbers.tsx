@@ -51,7 +51,7 @@ export default function Numbers() {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         <NumberCard
-          description="Of estimated contaminated sites to be recoverd, only in the EU."
+          description="Of estimated contaminated sites to be recovered, only in the EU."
           image="https://cdn.sanity.io/images/wj2okvbq/production/05956bbe8b5b11c2c1fec5a7cd315971cfcc509b-1500x1125.webp"
           title="3 million"
         />
@@ -61,7 +61,7 @@ export default function Numbers() {
           title="Over 60%"
         />
         <NumberCard
-          description="The loss of ecosystem benefits cause by soil degradetion."
+          description="The loss of ecosystem benefits cause by soil degradation."
           image="https://cdn.sanity.io/images/wj2okvbq/production/90180c6a849b692f747bac16dd81abffbda0c52a-2000x1500.webp"
           title="€50 bn/year"
         />

@@ -127,7 +127,7 @@ export default async function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:mail@terrapreta.com"
+                  href="mailto:mail@terrapreta.it"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
