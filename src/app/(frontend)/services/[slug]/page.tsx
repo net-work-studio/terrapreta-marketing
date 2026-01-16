@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
@@ -18,6 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const { isEnabled: isDraftMode } = await draftMode();
   const [{ data: service }, siteSettings] = await Promise.all([
     sanityFetch({
       query: SERVICE_QUERY,
@@ -32,6 +34,7 @@ export async function generateMetadata({
       description: "Discover our services.",
       url: "/services",
       siteSettings,
+      isDraftMode,
     });
   }
 
@@ -48,6 +51,7 @@ export async function generateMetadata({
     ogDescription: service.seo?.ogDescription ?? undefined,
     twitterCard: service.seo?.twitterCard ?? undefined,
     siteSettings,
+    isDraftMode,
   });
 }
 

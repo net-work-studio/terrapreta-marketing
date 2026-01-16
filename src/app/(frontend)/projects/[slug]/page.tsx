@@ -1,5 +1,6 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
@@ -31,6 +32,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const { isEnabled: isDraftMode } = await draftMode();
   const [{ data: projectItem }, siteSettings] = await Promise.all([
     sanityFetch({
       query: PROJECT_ITEM_QUERY,
@@ -45,6 +47,7 @@ export async function generateMetadata({
       description: "Explore our latest projects.",
       url: "/projects",
       siteSettings,
+      isDraftMode,
     });
   }
 
@@ -65,6 +68,7 @@ export async function generateMetadata({
     ogDescription: projectItem.seo?.ogDescription ?? undefined,
     twitterCard: projectItem.seo?.twitterCard ?? undefined,
     siteSettings,
+    isDraftMode,
   });
 }
 
