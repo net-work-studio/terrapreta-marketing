@@ -46,6 +46,7 @@ export const redirectDoc = defineType({
         layout: "radio",
       },
       initialValue: "permanent",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       type: "string",
