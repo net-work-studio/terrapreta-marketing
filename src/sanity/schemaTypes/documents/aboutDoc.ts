@@ -11,7 +11,7 @@ export const aboutDoc = defineType({
       type: "string",
       name: "name",
       title: "Title",
-      validation: (e) => e.required(),
+      validation: (Rule) => Rule.required(),
     }),
   ],
 });
